@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:fillViewport="true">
+    <LinearLayout android:orientation="vertical" android:padding="16dp"
+        android:layout_width="match_parent" android:layout_height="wrap_content">
+
+        <androidx.cardview.widget.CardView
+            app:cardCornerRadius="26dp" app:cardElevation="0dp"
+            android:layout_width="match_parent" android:layout_height="wrap_content">
+            <LinearLayout android:orientation="vertical" android:padding="24dp" android:gravity="center_horizontal"
+                android:layout_width="match_parent" android:layout_height="wrap_content">
+                <ImageView android:src="@drawable/ic_cloudy_settings"
+                    android:layout_width="72dp" android:layout_height="72dp"/>
+                <TextView android:id="@+id/name" style="@style/Cloudy.SectionTitle"
+                    android:layout_marginTop="12dp"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+                <TextView android:id="@+id/handle" android:textSize="14sp"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <TextView style="@style/Cloudy.CategoryHeader" android:text="Details"
+            android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        <LinearLayout style="@style/Cloudy.Row">
+            <TextView style="@style/Cloudy.Row.Label" android:text="ROM"/>
+            <TextView android:id="@+id/rom" style="@style/Cloudy.Row.Value" tools:text="-"/>
+        </LinearLayout>
+        <View android:layout_width="match_parent" android:layout_height="1dp"
+            android:background="?android:attr/listDivider"/>
+        <LinearLayout style="@style/Cloudy.Row">
+            <TextView style="@style/Cloudy.Row.Label" android:text="Device"/>
+            <TextView android:id="@+id/device" style="@style/Cloudy.Row.Value" tools:text="-"/>
+        </LinearLayout>
+        <View android:layout_width="match_parent" android:layout_height="1dp"
+            android:background="?android:attr/listDivider"/>
+        <Button android:id="@+id/btnTelegram"
+            android:layout_marginTop="16dp" android:text="Telegram"
+            android:layout_width="match_parent" android:layout_height="wrap_content"/>
+        <Button android:id="@+id/btnDonate"
+            android:layout_marginTop="8dp" android:text="Donate"
+            android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

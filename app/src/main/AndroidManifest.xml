@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- Only granted when Cloudy ships as a privileged/system app inside the ROM. -->
+    <uses-permission android:name="android.permission.REBOOT" tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.RECOVERY" tools:ignore="ProtectedPermissions" />
+
+    <!-- oneui-icons / oneui-design raise minSdk; override so our minSdk 26 app builds. -->
+    <uses-sdk tools:overrideLibrary="dev.oneuiproject.oneui" />
+
+    <application
+        android:name=".CloudyApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:enableOnBackInvokedCallback="true"
+        android:theme="@style/OneUITheme"
+        tools:ignore="UnusedAttribute">
+
+        <!-- OneUI dynamic (wallpaper) color theming. Provided by oneui-design. -->
+        <meta-data android:name="SamsungBasicInteraction" android:value="SEP10" />
+        <meta-data android:name="theming-meta" android:value="theming_meta_cloudy" />
+        <meta-data android:name="theming-meta-xml" android:value="@xml/theming_meta_cloudy" />
+
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:configChanges="orientation|screenLayout|screenSize"
+            android:launchMode="singleTop">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <!-- ===== Samsung Settings dashboard injection =====
+                 Indexes only when Cloudy is a privileged/system app in the ROM;
+                 a sideloaded user app is silently ignored by the indexer. -->
+            <intent-filter>
+                <action android:name="com.samsung.settings.action.EXTRA_SETTINGS" />
+            </intent-filter>
+            <meta-data android:name="com.samsung.settings.category"
+                android:value="com.samsung.settings.category.software_update" />
+            <meta-data android:name="com.android.settings.title"
+                android:resource="@string/settings_entry_title" />
+            <meta-data android:name="com.android.settings.summary"
+                android:resource="@string/settings_entry_summary" />
+            <meta-data android:name="com.android.settings.icon"
+                android:resource="@drawable/ic_cloudy_settings" />
+            <meta-data android:name="com.samsung.settings.order" android:value="150" />
+        </activity>
+
+        <service android:name=".ota.RootService" android:exported="false" />
+    </application>
+</manifest>

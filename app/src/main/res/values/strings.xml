@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Cloudy</string>
+    <string name="settings_entry_title">Cloudy</string>
+    <string name="settings_entry_summary">Check update of LumiROM</string>
+    <string name="tab_check_update">Check update</string>
+    <string name="tab_maintainer">Maintainer</string>
+</resources>
