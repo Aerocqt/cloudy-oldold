@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.aerocat.cloudy"
-    compileSdk = 35            // SESL8 requires compileSdk >= 34
+    compileSdk = 36          // SESL8 requires compileSdk >= 34
 
     defaultConfig {
         applicationId = "com.aerocat.cloudy"
