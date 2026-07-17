@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         // Large bold title that alpha-fades between expanded and collapsed states (OneUI behaviour).
         binding.toolbarLayout.setTitle(getString(R.string.app_name))
-        binding.toolbarLayout.subtitle = getString(R.string.settings_entry_summary)
+
 
         binding.viewPager.adapter = TabsAdapter(this)
         TabLayoutMediator(binding.tabs, binding.viewPager) { tab, pos ->
