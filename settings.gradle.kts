@@ -11,6 +11,7 @@ dependencyResolutionManagement {
         // even though the packages are public. Provide a GitHub username + a PAT with
         // the read:packages scope. Local: ~/.gradle/gradle.properties (gpr.user / gpr.key).
         // CI: GPR_USER / GPR_TOKEN env vars (from Actions secrets).
+       maven { url = uri("https://jitpack.io") }
         val ghUser = providers.gradleProperty("gpr.user")
             .orElse(providers.environmentVariable("GPR_USER"))
         val ghToken = providers.gradleProperty("gpr.key")
