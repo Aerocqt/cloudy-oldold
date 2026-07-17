@@ -47,3 +47,12 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel)
     implementation(libs.kotlinx.coroutines.android)
 }
+
+configurations.all {
+    resolutionStrategy.dependencySubstitution {
+        substitute(module("androidx.core:core"))
+            .using(module("sesl.androidx.core:core:1.17.0+1.0.7-sesl8+rev1"))
+        substitute(module("androidx.core:core-ktx"))
+            .using(module("sesl.androidx.core:core-ktx:1.17.0+1.0.0-sesl8+rev0"))
+    }
+}
