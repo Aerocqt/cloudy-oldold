@@ -2,14 +2,14 @@ package com.aerocat.cloudy.ota
 
 import android.content.Intent
 import android.os.IBinder
-import com.topjohnwu.superuser.ipc.RootService
+import com.topjohnwu.superuser.ipc.RootService as LibsuRootService
 import java.io.File
 
 /**
  * libsu RootService — hosts a persistent worker in a separate ROOT process.
  * Everything in [Ipc] runs as uid 0, so the app never has to spawn `su -c` per action.
  */
-class RootService : RootService() {
+class CloudyRootService : LibsuRootService() {
 
     override fun onBind(intent: Intent): IBinder = Ipc()
 

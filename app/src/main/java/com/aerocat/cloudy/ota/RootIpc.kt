@@ -5,12 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
-import com.topjohnwu.superuser.ipc.RootService
+import com.topjohnwu.superuser.ipc.RootService as LibsuRootService
 import kotlin.coroutines.resume
 import kotlinx.coroutines.suspendCancellableCoroutine
 
 /**
- * Binds [com.aerocat.cloudy.ota.RootService] once and keeps the connection alive for the
+ * Binds [CloudyRootService] once and keeps the connection alive for the
  * session. Call [connect] before flashing; [disconnect] when the screen is done.
  */
 class RootIpc(private val context: Context) {
@@ -33,13 +33,13 @@ class RootIpc(private val context: Context) {
             override fun onServiceDisconnected(name: ComponentName?) { worker = null }
         }
         connection = conn
-        val intent = Intent(context, RootService::class.java)
-        RootService.bind(intent, conn)
+        val intent = Intent(context, CloudyRootService::class.java)
+        LibsuRootService.bind(intent, conn)
         cont.invokeOnCancellation { disconnect() }
     }
 
     fun disconnect() {
-        connection?.let { RootService.stop(Intent(context, RootService::class.java)) }
+        connection?.let { LibsuRootService.stop(Intent(context, CloudyRootService::class.java)) }
         connection = null
         worker = null
     }

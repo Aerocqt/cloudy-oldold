@@ -3,7 +3,6 @@ package com.aerocat.cloudy.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
 import com.aerocat.cloudy.R
 import com.aerocat.cloudy.databinding.ActivityMainBinding
 
@@ -46,7 +45,7 @@ class MainActivity : AppCompatActivity() {
      * so drop it if the library added one.
      */
     private fun removeOverflowTab() {
-        val overflowId = dev.oneuiproject.oneui.R.id.bottom_tab_menu_show_grid_dialog
+        val overflowId = dev.oneuiproject.oneui.design.R.id.bottom_tab_menu_show_grid_dialog
         for (i in binding.bottomTab.tabCount - 1 downTo 0) {
             if (binding.bottomTab.getTabAt(i)?.id == overflowId) {
                 binding.bottomTab.removeTabAt(i)
@@ -56,10 +55,12 @@ class MainActivity : AppCompatActivity() {
 
     /** Swap the main_content fragment and update the collapsing header subtitle. */
     private fun show(fragment: Fragment, subtitleRes: Int) {
-        supportFragmentManager.commit {
-            setReorderingAllowed(true)
-            replace(binding.fragmentContainer.id, fragment)
-        }
+        // Plain FragmentTransaction API: the KTX commit{} extension lives in
+        // androidx.fragment:fragment-ktx, which the SESL fork does not ship.
+        supportFragmentManager.beginTransaction()
+            .setReorderingAllowed(true)
+            .replace(binding.fragmentContainer.id, fragment)
+            .commit()
         binding.toolbarLayout.setSubtitle(getString(subtitleRes))
     }
 }

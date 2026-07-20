@@ -45,6 +45,7 @@ dependencies {
 
     // Standard AndroidX / coroutines (compatible alongside SESL)
     implementation(libs.androidx.lifecycle.viewmodel)
+    implementation(libs.androidx.lifecycle.runtime)   // lifecycleScope
     implementation(libs.kotlinx.coroutines.android)
 }
 
