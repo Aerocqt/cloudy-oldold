@@ -44,6 +44,7 @@ class RootIpc(private val context: Context) {
         worker = null
     }
 
-    /** Convenience: read ro.cloudy.version (the ROM's own version stamp) via the worker. */
-    fun cloudyVersionProp(): String = worker?.getProp("ro.cloudy.version").orEmpty()
+    /** Convenience: read the ROM stamp / maintainer props via the root worker. */
+    fun romVersionProp(): String = worker?.getProp(DeviceInfo.PROP_ROM_VER).orEmpty()
+    fun maintainerProp(): String = worker?.getProp(DeviceInfo.PROP_MAINTAINER).orEmpty()
 }

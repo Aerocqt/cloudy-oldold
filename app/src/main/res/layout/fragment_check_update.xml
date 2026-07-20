@@ -20,10 +20,11 @@
             android:layout_height="wrap_content"
             android:text="@string/sep_status" />
 
-        <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:colorBackground"
+            android:background="@drawable/bg_oui_card"
+            android:layout_marginHorizontal="@dimen/oui_card_margin_h"
             android:orientation="vertical">
 
             <dev.oneuiproject.oneui.widget.CardItemView
@@ -45,7 +46,7 @@
                 android:max="100"
                 android:visibility="gone"
                 tools:visibility="visible" />
-        </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
+        </LinearLayout>
 
         <!-- ===== Available build ===== -->
         <dev.oneuiproject.oneui.widget.Separator
@@ -53,10 +54,11 @@
             android:layout_height="wrap_content"
             android:text="@string/sep_available" />
 
-        <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:colorBackground"
+            android:background="@drawable/bg_oui_card"
+            android:layout_marginHorizontal="@dimen/oui_card_margin_h"
             android:orientation="vertical">
 
             <dev.oneuiproject.oneui.widget.CardItemView android:id="@+id/rowRemoteVersion"
@@ -74,7 +76,7 @@
             <dev.oneuiproject.oneui.widget.CardItemView android:id="@+id/rowRemoteFingerprint"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 app:title="@string/f_fingerprint" app:summaryMaxLines="3" />
-        </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
+        </LinearLayout>
 
         <!-- ===== Changelog ===== -->
         <dev.oneuiproject.oneui.widget.Separator
@@ -82,10 +84,11 @@
             android:layout_height="wrap_content"
             android:text="@string/sep_changelog" />
 
-        <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:colorBackground"
+            android:background="@drawable/bg_oui_card"
+            android:layout_marginHorizontal="@dimen/oui_card_margin_h"
             android:orientation="vertical">
 
             <TextView
@@ -97,7 +100,7 @@
                 android:lineSpacingExtra="5dp"
                 android:textSize="15sp"
                 android:textColor="?android:attr/textColorSecondary" />
-        </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
+        </LinearLayout>
 
         <!-- ===== This device ===== -->
         <dev.oneuiproject.oneui.widget.Separator
@@ -105,10 +108,11 @@
             android:layout_height="wrap_content"
             android:text="@string/sep_device" />
 
-        <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:colorBackground"
+            android:background="@drawable/bg_oui_card"
+            android:layout_marginHorizontal="@dimen/oui_card_margin_h"
             android:orientation="vertical">
 
             <dev.oneuiproject.oneui.widget.CardItemView android:id="@+id/rowInstalledVersion"
@@ -129,7 +133,7 @@
             <dev.oneuiproject.oneui.widget.CardItemView android:id="@+id/rowKernel"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 app:title="@string/f_kernel" app:summaryMaxLines="3" />
-        </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
+        </LinearLayout>
 
         <!-- ===== Actions ===== -->
         <LinearLayout

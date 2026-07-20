@@ -47,7 +47,7 @@ class CheckUpdateFragment : Fragment() {
     }
 
     private fun renderLocalDeviceRows() {
-        b.rowInstalledVersion.summary = DeviceInfo.cloudyVersion.ifBlank { "ro.cloudy.version unset" }
+        b.rowInstalledVersion.summary = DeviceInfo.romVersion.ifBlank { "${DeviceInfo.PROP_ROM_VER} unset" }
         b.rowDeviceModel.summary = DeviceInfo.model
         b.rowAndroid.summary = DeviceInfo.androidVersion
         b.rowSecurity.summary = DeviceInfo.securityPatch
@@ -185,6 +185,11 @@ class CheckUpdateFragment : Fragment() {
     }
 
     companion object {
-        const val DEFAULT_JSON_URL = "https://raw.githubusercontent.com/LumiROM/ota/main/a32.json"
+        /**
+         * Default manifest location. The device codename is auto-detected from
+         * `ro.product.device` (falling back to Build.DEVICE), e.g. .../16.2/a32.json
+         */
+        private const val OTA_BASE = "https://raw.githubusercontent.com/cloudyota/ota-update/16.2"
+        val DEFAULT_JSON_URL: String get() = "$OTA_BASE/${DeviceInfo.deviceCodename}.json"
     }
 }

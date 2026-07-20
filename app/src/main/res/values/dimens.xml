@@ -1,0 +1,9 @@
+<resources>
+    <!-- OneUI 8.5 card radius. SESL's RoundedLinearLayout inherits the *system* corner
+         radius, which on non-Samsung devices (e.g. the Pixel used for Robo tests) falls
+         back to a small AOSP value and looks like OneUI 4. Using our own shape drawable
+         guarantees the OneUI 8.5 radius on every device. -->
+    <dimen name="oui_card_radius">26dp</dimen>
+    <dimen name="oui_card_margin_h">16dp</dimen>
+    <dimen name="oui_float_nav_radius">30dp</dimen>
+</resources>

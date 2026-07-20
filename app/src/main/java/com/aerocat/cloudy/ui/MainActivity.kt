@@ -35,7 +35,23 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
+        removeOverflowTab()
+
         if (savedInstanceState == null) show(updateFragment, R.string.tab_check_update)
+    }
+
+    /**
+     * BottomTabLayout appends a "More" overflow tab (hamburger, opening a grid dialog)
+     * whenever it decides some menu items don't fit. With only three tabs we never want it,
+     * so drop it if the library added one.
+     */
+    private fun removeOverflowTab() {
+        val overflowId = dev.oneuiproject.oneui.R.id.bottom_tab_menu_show_grid_dialog
+        for (i in binding.bottomTab.tabCount - 1 downTo 0) {
+            if (binding.bottomTab.getTabAt(i)?.id == overflowId) {
+                binding.bottomTab.removeTabAt(i)
+            }
+        }
     }
 
     /** Swap the main_content fragment and update the collapsing header subtitle. */

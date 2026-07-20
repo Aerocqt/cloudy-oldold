@@ -27,7 +27,7 @@
       "Cloudy OTA: SHA-256 verification before flashing"
     ],
     "download": {
-      "url": "https://github.com/LumiROM/ota/releases/download/8.6.4/LumiROM-8.6.4-a32.zip",
+      "url": "https://github.com/cloudyota/ota-update/releases/download/16.2/LumiROM-8.6.4-a32.zip",
       "filename": "LumiROM-8.6.4-a32.zip",
       "size_bytes": 1493172224,
       "sha256": "9f2c1d7e5a3b4c6d8e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d",

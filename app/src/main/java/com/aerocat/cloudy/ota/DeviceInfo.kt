@@ -17,18 +17,25 @@ object DeviceInfo {
     }.getOrElse { System.getProperty("os.version") ?: "?" }
 
     /**
-     * The ROM's own version stamp. LumiROM builds set this in the build props
-     * (e.g. `ro.cloudy.version=8.6.4`). Reading it is the most reliable way to know
-     * what's actually installed — more so than fingerprint diffing. Empty if unset
-     * (e.g. Cloudy running on a non-LumiROM build).
+     * The ROM's own version stamp: `ro.cloudy.rom.ver` (e.g. "8.6.4").
+     * Most reliable signal for what's installed - better than fingerprint diffing.
+     * Empty when unset (e.g. Cloudy running on a non-LumiROM build).
      */
-    val cloudyVersion: String get() = getProp("ro.cloudy.version").orEmpty()
+    val romVersion: String get() = getProp(PROP_ROM_VER).orEmpty()
 
-    /** A-Only vs A/B, detected from the ROM slot suffix property. */
-    val isAOnly: Boolean get() = runCatching {
-        val slot = getProp("ro.boot.slot_suffix")
-        slot.isNullOrEmpty()
-    }.getOrDefault(true)
+    /** Optional numeric companion for clean integer comparison. */
+    val romVersionCode: Long? get() = getProp(PROP_ROM_VER_CODE)?.toLongOrNull()
+
+    /** Maintainer name baked into the ROM: `ro.cloudy.maintainer`. */
+    val maintainer: String get() = getProp(PROP_MAINTAINER).orEmpty()
+
+    /** Device codename used to build the default OTA manifest URL (e.g. "a32"). */
+    val deviceCodename: String
+        get() = getProp("ro.product.device").orEmpty().ifBlank { Build.DEVICE ?: "unknown" }
+
+    const val PROP_ROM_VER = "ro.cloudy.rom.ver"
+    const val PROP_ROM_VER_CODE = "ro.cloudy.rom.ver.code"
+    const val PROP_MAINTAINER = "ro.cloudy.maintainer"
 
     fun getProp(key: String): String? = runCatching {
         val p = Runtime.getRuntime().exec(arrayOf("getprop", key))

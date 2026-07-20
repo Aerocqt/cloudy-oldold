@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    Authentic OneUI 8 shell:
-      ToolbarLayout      - collapsing large title + subtitle (alpha fade handled by the lib)
-      FragmentContainer  - app:layout_location="main_content" (adaptive margins applied by lib)
-      BottomTabLayout    - app:layout_location="footer" (OneUI bottom navigation bar)
+    OneUI 8 shell with an 8.5-style FLOATING bottom navigation bar:
+      ToolbarLayout          - collapsing large title + subtitle
+      FragmentContainerView  - main_content (adaptive margins handled by the lib)
+      BottomFloatingLayout   - footer; floats the tab bar with margins + pill background
 -->
 <dev.oneuiproject.oneui.layout.ToolbarLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -22,11 +22,22 @@
         android:layout_height="match_parent"
         app:layout_location="main_content" />
 
-    <dev.oneuiproject.oneui.widget.BottomTabLayout
-        android:id="@+id/bottomTab"
+    <dev.oneuiproject.oneui.widget.BottomFloatingLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_location="footer"
-        app:menu="@menu/menu_bottom_tabs" />
+        android:orientation="vertical"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginBottom="12dp"
+        app:maxChildWidth="520dp"
+        app:layout_location="footer">
+
+        <dev.oneuiproject.oneui.widget.BottomTabLayout
+            android:id="@+id/bottomTab"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_oui_float_nav"
+            android:elevation="6dp"
+            app:menu="@menu/menu_bottom_tabs" />
+    </dev.oneuiproject.oneui.widget.BottomFloatingLayout>
 
 </dev.oneuiproject.oneui.layout.ToolbarLayout>

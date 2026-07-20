@@ -4,11 +4,11 @@ import com.aerocat.cloudy.data.Release
 
 /**
  * Decides whether a remote [Release] is newer than what's installed, using the ROM's own
- * stamp `ro.cloudy.version` (and `ro.cloudy.version_code` when available) as the source of truth.
+ * stamp `ro.cloudy.rom.ver` (and `ro.cloudy.rom.ver.code` when available) as the source of truth.
  *
  * Order of preference:
- *   1. Integer compare: manifest.version_code  vs  ro.cloudy.version_code
- *   2. Semver compare:  manifest.version        vs  ro.cloudy.version
+ *   1. Integer compare: manifest.version_code  vs  ro.cloudy.rom.ver.code
+ *   2. Semver compare:  manifest.version        vs  ro.cloudy.rom.ver
  *   3. Fallback:        build fingerprint differs (last resort, least reliable)
  */
 object VersionCheck {
@@ -16,8 +16,8 @@ object VersionCheck {
     data class Result(val updateAvailable: Boolean, val installed: String, val reason: String)
 
     fun evaluate(release: Release): Result {
-        val installedVersion = DeviceInfo.cloudyVersion                     // ro.cloudy.version
-        val installedCode = DeviceInfo.getProp("ro.cloudy.version_code")?.toLongOrNull()
+        val installedVersion = DeviceInfo.romVersion            // ro.cloudy.rom.ver
+        val installedCode = DeviceInfo.romVersionCode           // ro.cloudy.rom.ver.code
 
         // 1) numeric version codes — cleanest
         if (release.versionCode != null && installedCode != null) {
@@ -28,16 +28,16 @@ object VersionCheck {
             )
         }
 
-        // 2) semver from ro.cloudy.version
+        // 2) semver from ro.cloudy.rom.ver
         if (installedVersion.isNotBlank()) {
             val cmp = compareSemver(extractSemver(release.version), extractSemver(installedVersion))
-            return Result(cmp > 0, installedVersion, "ro.cloudy.version $installedVersion")
+            return Result(cmp > 0, installedVersion, "${DeviceInfo.PROP_ROM_VER} $installedVersion")
         }
 
         // 3) fingerprint fallback (non-LumiROM base, prop unset)
         val differs = release.fingerprint.isNotBlank() &&
                 release.fingerprint != DeviceInfo.fingerprint
-        return Result(differs, "unknown (ro.cloudy.version unset)", "fingerprint fallback")
+        return Result(differs, "unknown (${DeviceInfo.PROP_ROM_VER} unset)", "fingerprint fallback")
     }
 
     /** Pulls the first x[.y[.z]] token out of a label like "LumiROM 8.6.4 Beta". */

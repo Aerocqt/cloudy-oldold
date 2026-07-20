@@ -31,13 +31,31 @@ do NOT redefine it). This is what applies the device's OneUI color palette.
   `OtaInstaller` (privileged -> rooted recovery-staging -> gated raw block), `VersionCheck` (ro.cloudy.version).
 - `ui/` - `MainActivity` (ToolbarLayout + TabLayout + ViewPager2), Check Update / Maintainer / Settings.
 
-## Update detection
-Uses the ROM's own stamp: `ro.cloudy.version_code` vs manifest `version_code` (int), else
-`ro.cloudy.version` semver, else build-fingerprint fallback. Bake into LumiROM build props:
+## ROM props Cloudy reads
+Bake these into the LumiROM build props:
 ```
-ro.cloudy.version=8.6.4
-ro.cloudy.version_code=80604
+ro.cloudy.rom.ver=8.6.4          # ROM version (shown as "Installed version")
+ro.cloudy.rom.ver.code=80604     # optional numeric, preferred for comparison
+ro.cloudy.maintainer=aerocat     # shown on the Maintainer tab
 ```
+Update detection order: `ro.cloudy.rom.ver.code` vs manifest `version_code` (int) ->
+`ro.cloudy.rom.ver` semver -> build-fingerprint fallback.
+
+## Default OTA manifest URL
+```
+https://raw.githubusercontent.com/cloudyota/ota-update/16.2/<codename>.json
+```
+`<codename>` is auto-detected from `ro.product.device` (fallback `Build.DEVICE`), e.g. `a32.json`.
+Overridable in Settings -> Custom JSON URL.
+
+## Fonts and corner radius (important)
+- **One UI Sans**: proprietary Samsung font, cannot be bundled. The app forces
+  `android:fontFamily="sec"` (the same alias oneui-design uses internally), which resolves to
+  One UI Sans on One UI 8 devices and falls back to the platform sans elsewhere.
+- **Corner radius**: SESL's RoundedLinearLayout inherits the *system* corner radius, which on
+  non-Samsung devices (e.g. the Pixel used by Firebase Robo tests) falls back to a small AOSP
+  value and looks like One UI 4. Cards therefore use `@drawable/bg_oui_card` (26dp) so the
+  One UI 8.5 radius is identical on every device.
 
 ## Build
 ```

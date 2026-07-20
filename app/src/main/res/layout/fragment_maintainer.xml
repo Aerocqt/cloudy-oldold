@@ -26,7 +26,7 @@
                 android:id="@+id/avatar"
                 android:layout_width="88dp"
                 android:layout_height="88dp"
-                android:src="@drawable/ic_cloudy_settings"
+                android:src="@drawable/ic_cloud_large"
                 android:contentDescription="@string/tab_maintainer" />
 
             <TextView
@@ -52,10 +52,11 @@
             android:layout_height="wrap_content"
             android:text="@string/sep_details" />
 
-        <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:colorBackground"
+            android:background="@drawable/bg_oui_card"
+            android:layout_marginHorizontal="@dimen/oui_card_margin_h"
             android:orientation="vertical">
 
             <dev.oneuiproject.oneui.widget.CardItemView android:id="@+id/rom"
@@ -64,17 +65,18 @@
             <dev.oneuiproject.oneui.widget.CardItemView android:id="@+id/device"
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 app:title="@string/f_device" />
-        </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
+        </LinearLayout>
 
         <dev.oneuiproject.oneui.widget.Separator
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/sep_contact" />
 
-        <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:colorBackground"
+            android:background="@drawable/bg_oui_card"
+            android:layout_marginHorizontal="@dimen/oui_card_margin_h"
             android:orientation="vertical">
 
             <dev.oneuiproject.oneui.widget.CardItemView android:id="@+id/btnTelegram"
@@ -85,6 +87,6 @@
                 android:layout_width="match_parent" android:layout_height="wrap_content"
                 android:clickable="true" android:focusable="true"
                 app:title="@string/btn_donate" />
-        </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
