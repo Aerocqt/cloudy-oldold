@@ -5,110 +5,155 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:overScrollMode="always"
     android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="16dp"
         android:paddingBottom="24dp">
 
-        <TextView android:id="@+id/status" style="@style/Cloudy.SectionTitle"
-            android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Checking..." />
+        <!-- ===== Status ===== -->
+        <dev.oneuiproject.oneui.widget.Separator
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sep_status" />
 
-        <ProgressBar android:id="@+id/progress" style="?android:attr/progressBarStyleHorizontal"
-            android:indeterminate="true" android:visibility="gone"
-            android:layout_width="match_parent" android:layout_height="wrap_content" />
+        <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:colorBackground"
+            android:orientation="vertical">
 
-        <TextView style="@style/Cloudy.CategoryHeader" android:text="Available build"
-            android:layout_width="match_parent" android:layout_height="wrap_content"/>
-        <LinearLayout style="@style/Cloudy.Row">
-            <TextView style="@style/Cloudy.Row.Label" android:text="Version"/>
-            <TextView android:id="@+id/rowRemoteVersion" style="@style/Cloudy.Row.Value" tools:text="-"/>
-        </LinearLayout>
-        <View android:layout_width="match_parent" android:layout_height="1dp"
-            android:background="?android:attr/listDivider"/>
-        <LinearLayout style="@style/Cloudy.Row">
-            <TextView style="@style/Cloudy.Row.Label" android:text="Build date"/>
-            <TextView android:id="@+id/rowBuildDate" style="@style/Cloudy.Row.Value" tools:text="-"/>
-        </LinearLayout>
-        <View android:layout_width="match_parent" android:layout_height="1dp"
-            android:background="?android:attr/listDivider"/>
-        <LinearLayout style="@style/Cloudy.Row">
-            <TextView style="@style/Cloudy.Row.Label" android:text="Android version"/>
-            <TextView android:id="@+id/rowRemoteAndroid" style="@style/Cloudy.Row.Value" tools:text="-"/>
-        </LinearLayout>
-        <View android:layout_width="match_parent" android:layout_height="1dp"
-            android:background="?android:attr/listDivider"/>
-        <LinearLayout style="@style/Cloudy.Row">
-            <TextView style="@style/Cloudy.Row.Label" android:text="Security patch"/>
-            <TextView android:id="@+id/rowRemoteSecurity" style="@style/Cloudy.Row.Value" tools:text="-"/>
-        </LinearLayout>
-        <View android:layout_width="match_parent" android:layout_height="1dp"
-            android:background="?android:attr/listDivider"/>
-        <LinearLayout style="@style/Cloudy.Row">
-            <TextView style="@style/Cloudy.Row.Label" android:text="Build fingerprint"/>
-            <TextView android:id="@+id/rowRemoteFingerprint" style="@style/Cloudy.Row.Value" tools:text="-"/>
-        </LinearLayout>
-        <View android:layout_width="match_parent" android:layout_height="1dp"
-            android:background="?android:attr/listDivider"/>
-        <TextView style="@style/Cloudy.CategoryHeader" android:text="Changelog"
-            android:layout_width="match_parent" android:layout_height="wrap_content"/>
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent" android:layout_height="wrap_content"
-            app:cardCornerRadius="24dp" app:cardElevation="0dp">
-            <TextView android:id="@+id/changelog" android:padding="20dp" android:lineSpacingExtra="4dp"
+            <dev.oneuiproject.oneui.widget.CardItemView
+                android:id="@+id/rowStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:showTopDivider="false"
+                app:icon="@drawable/ic_cloudy_settings"
+                app:title="@string/status_checking"
+                tools:ignore="ContentDescription" />
+
+            <ProgressBar
+                android:id="@+id/downloadBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginBottom="8dp"
+                android:max="100"
+                android:visibility="gone"
+                tools:visibility="visible" />
+        </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
+
+        <!-- ===== Available build ===== -->
+        <dev.oneuiproject.oneui.widget.Separator
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sep_available" />
+
+        <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:colorBackground"
+            android:orientation="vertical">
+
+            <dev.oneuiproject.oneui.widget.CardItemView android:id="@+id/rowRemoteVersion"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:showTopDivider="false" app:title="@string/f_version" tools:summary="-" />
+            <dev.oneuiproject.oneui.widget.CardItemView android:id="@+id/rowBuildDate"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:title="@string/f_build_date" />
+            <dev.oneuiproject.oneui.widget.CardItemView android:id="@+id/rowRemoteAndroid"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:title="@string/f_android" />
+            <dev.oneuiproject.oneui.widget.CardItemView android:id="@+id/rowRemoteSecurity"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:title="@string/f_patch" />
+            <dev.oneuiproject.oneui.widget.CardItemView android:id="@+id/rowRemoteFingerprint"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:title="@string/f_fingerprint" app:summaryMaxLines="3" />
+        </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
+
+        <!-- ===== Changelog ===== -->
+        <dev.oneuiproject.oneui.widget.Separator
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sep_changelog" />
+
+        <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:colorBackground"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/changelog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="18dp"
+                android:lineSpacingExtra="5dp"
                 android:textSize="15sp"
-                android:layout_width="match_parent" android:layout_height="wrap_content"/>
-        </androidx.cardview.widget.CardView>
+                android:textColor="?android:attr/textColorSecondary" />
+        </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
 
-        <TextView style="@style/Cloudy.CategoryHeader" android:text="This device"
-            android:layout_width="match_parent" android:layout_height="wrap_content"/>
-        <LinearLayout style="@style/Cloudy.Row">
-            <TextView style="@style/Cloudy.Row.Label" android:text="Installed version"/>
-            <TextView android:id="@+id/rowInstalledVersion" style="@style/Cloudy.Row.Value" tools:text="-"/>
+        <!-- ===== This device ===== -->
+        <dev.oneuiproject.oneui.widget.Separator
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sep_device" />
+
+        <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:colorBackground"
+            android:orientation="vertical">
+
+            <dev.oneuiproject.oneui.widget.CardItemView android:id="@+id/rowInstalledVersion"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:showTopDivider="false" app:title="@string/f_installed" />
+            <dev.oneuiproject.oneui.widget.CardItemView android:id="@+id/rowDeviceModel"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:title="@string/f_model" />
+            <dev.oneuiproject.oneui.widget.CardItemView android:id="@+id/rowAndroid"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:title="@string/f_android" />
+            <dev.oneuiproject.oneui.widget.CardItemView android:id="@+id/rowSecurity"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:title="@string/f_patch" />
+            <dev.oneuiproject.oneui.widget.CardItemView android:id="@+id/rowFingerprint"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:title="@string/f_fingerprint" app:summaryMaxLines="3" />
+            <dev.oneuiproject.oneui.widget.CardItemView android:id="@+id/rowKernel"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:title="@string/f_kernel" app:summaryMaxLines="3" />
+        </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
+
+        <!-- ===== Actions ===== -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="20dp">
+
+            <Button
+                android:id="@+id/btnCheck"
+                style="@style/OneUI.ButtonStyleOutline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_check" />
+
+            <Button
+                android:id="@+id/btnDownload"
+                style="@style/OneUI.ContainedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:enabled="false"
+                android:text="@string/btn_download" />
         </LinearLayout>
-        <View android:layout_width="match_parent" android:layout_height="1dp"
-            android:background="?android:attr/listDivider"/>
-        <LinearLayout style="@style/Cloudy.Row">
-            <TextView style="@style/Cloudy.Row.Label" android:text="Device model"/>
-            <TextView android:id="@+id/rowDeviceModel" style="@style/Cloudy.Row.Value" tools:text="-"/>
-        </LinearLayout>
-        <View android:layout_width="match_parent" android:layout_height="1dp"
-            android:background="?android:attr/listDivider"/>
-        <LinearLayout style="@style/Cloudy.Row">
-            <TextView style="@style/Cloudy.Row.Label" android:text="Android version"/>
-            <TextView android:id="@+id/rowAndroid" style="@style/Cloudy.Row.Value" tools:text="-"/>
-        </LinearLayout>
-        <View android:layout_width="match_parent" android:layout_height="1dp"
-            android:background="?android:attr/listDivider"/>
-        <LinearLayout style="@style/Cloudy.Row">
-            <TextView style="@style/Cloudy.Row.Label" android:text="Security patch"/>
-            <TextView android:id="@+id/rowSecurity" style="@style/Cloudy.Row.Value" tools:text="-"/>
-        </LinearLayout>
-        <View android:layout_width="match_parent" android:layout_height="1dp"
-            android:background="?android:attr/listDivider"/>
-        <LinearLayout style="@style/Cloudy.Row">
-            <TextView style="@style/Cloudy.Row.Label" android:text="Build fingerprint"/>
-            <TextView android:id="@+id/rowFingerprint" style="@style/Cloudy.Row.Value" tools:text="-"/>
-        </LinearLayout>
-        <View android:layout_width="match_parent" android:layout_height="1dp"
-            android:background="?android:attr/listDivider"/>
-        <LinearLayout style="@style/Cloudy.Row">
-            <TextView style="@style/Cloudy.Row.Label" android:text="Kernel version"/>
-            <TextView android:id="@+id/rowKernel" style="@style/Cloudy.Row.Value" tools:text="-"/>
-        </LinearLayout>
-        <View android:layout_width="match_parent" android:layout_height="1dp"
-            android:background="?android:attr/listDivider"/>
-        <ProgressBar android:id="@+id/downloadBar" style="?android:attr/progressBarStyleHorizontal"
-            android:max="100" android:layout_marginTop="16dp"
-            android:layout_width="match_parent" android:layout_height="wrap_content"/>
-        <Button android:id="@+id/btnCheck"
-            android:layout_marginTop="12dp" android:text="Check for updates"
-            android:layout_width="match_parent" android:layout_height="wrap_content"/>
-        <Button android:id="@+id/btnDownload"
-            android:layout_marginTop="8dp" android:enabled="false" android:text="Download and install"
-            android:layout_width="match_parent" android:layout_height="wrap_content"/>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

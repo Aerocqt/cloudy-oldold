@@ -47,38 +47,39 @@ class CheckUpdateFragment : Fragment() {
     }
 
     private fun renderLocalDeviceRows() {
-        b.rowInstalledVersion.text = DeviceInfo.cloudyVersion.ifBlank { "ro.cloudy.version unset" }
-        b.rowDeviceModel.text = DeviceInfo.model
-        b.rowAndroid.text = DeviceInfo.androidVersion
-        b.rowSecurity.text = DeviceInfo.securityPatch
-        b.rowFingerprint.text = DeviceInfo.fingerprint
-        b.rowKernel.text = DeviceInfo.kernelVersion
+        b.rowInstalledVersion.summary = DeviceInfo.cloudyVersion.ifBlank { "ro.cloudy.version unset" }
+        b.rowDeviceModel.summary = DeviceInfo.model
+        b.rowAndroid.summary = DeviceInfo.androidVersion
+        b.rowSecurity.summary = DeviceInfo.securityPatch
+        b.rowFingerprint.summary = DeviceInfo.fingerprint
+        b.rowKernel.summary = DeviceInfo.kernelVersion
     }
 
     private fun check() {
-        b.progress.visibility = View.VISIBLE
+        b.downloadBar.isIndeterminate = true
+        b.downloadBar.visibility = View.VISIBLE
         b.btnCheck.isEnabled = false
         lifecycleScope.launch {
             repo.fetchManifest(jsonUrl)
                 .onSuccess { m ->
                     manifest = m
                     val r = m.release
-                    b.rowBuildDate.text = r.buildDate
+                    b.rowBuildDate.summary = r.buildDate
                     b.changelog.text = r.changelog.joinToString("\n") { "•  $it" }
                     // Remote release rows (what you'd move TO).
-                    b.rowRemoteVersion.text = r.version
-                    b.rowRemoteAndroid.text = r.androidVersion
-                    b.rowRemoteSecurity.text = r.securityPatch
-                    b.rowRemoteFingerprint.text = r.fingerprint
+                    b.rowRemoteVersion.summary = r.version
+                    b.rowRemoteAndroid.summary = r.androidVersion
+                    b.rowRemoteSecurity.summary = r.securityPatch
+                    b.rowRemoteFingerprint.summary = r.fingerprint
 
                     val check = com.aerocat.cloudy.ota.VersionCheck.evaluate(r)
-                    b.rowInstalledVersion.text = check.installed
-                    b.status.text = if (check.updateAvailable)
+                    b.rowInstalledVersion.summary = check.installed
+                    b.rowStatus.title = if (check.updateAvailable)
                         "Update available: ${r.version}" else "You are up to date"
                     b.btnDownload.isEnabled = check.updateAvailable
                 }
-                .onFailure { b.status.text = "Check failed: ${it.message}" }
-            b.progress.visibility = View.GONE
+                .onFailure { b.rowStatus.title = "Check failed: ${it.message}" }
+            b.downloadBar.visibility = View.GONE
             b.btnCheck.isEnabled = true
         }
     }
@@ -90,11 +91,13 @@ class CheckUpdateFragment : Fragment() {
             repo.download(dl, dest).collect { st ->
                 when (st) {
                     is DownloadState.Progress -> {
+                        b.downloadBar.isIndeterminate = false
+                        b.downloadBar.visibility = View.VISIBLE
                         b.downloadBar.progress = (st.fraction * 100).toInt()
-                        b.status.text = "Downloading ${(st.fraction * 100).toInt()}%"
+                        b.rowStatus.title = "Downloading ${(st.fraction * 100).toInt()}%"
                     }
                     is DownloadState.Failed -> {
-                        b.status.text = st.reason
+                        b.rowStatus.title = st.reason
                         b.btnDownload.isEnabled = true
                     }
                     is DownloadState.Done -> install(st.file)
@@ -115,7 +118,7 @@ class CheckUpdateFragment : Fragment() {
             is InstallResult.NeedsRoot -> installer.rootStageRecovery(pkg)
             else -> privileged
         }
-        b.status.text = when (result) {
+        b.rowStatus.title = when (result) {
             is InstallResult.StagedRebootingToRecovery -> "Staged — rebooting to recovery to apply…"
             is InstallResult.NeedsRoot -> "Root + Cloudy module required (${result.why})"
             is InstallResult.Failed -> "Install failed: ${result.why}"
@@ -152,7 +155,7 @@ class CheckUpdateFragment : Fragment() {
         lifecycleScope.launch {
             if (!rootIpc.connect()) {
                 dialog.dismiss()
-                b.status.text = "Root worker unavailable — is the Cloudy module installed?"
+                b.rowStatus.title = "Root worker unavailable — is the Cloudy module installed?"
                 return@launch
             }
             val cb = object : IFlashCallback.Stub() {
@@ -165,7 +168,7 @@ class CheckUpdateFragment : Fragment() {
                 override fun onDone(success: Boolean, message: String?) {
                     requireActivity().runOnUiThread {
                         dialog.dismiss()
-                        b.status.text = if (success)
+                        b.rowStatus.title = if (success)
                             "Flashed — rebooting to recovery to finalize…" else "Flash failed: ${message.orEmpty()}"
                         if (success) rootIpc.worker?.rebootRecovery()
                     }

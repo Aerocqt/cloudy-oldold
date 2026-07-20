@@ -2,47 +2,89 @@
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:overScrollMode="always"
     android:fillViewport="true">
-    <LinearLayout android:orientation="vertical" android:padding="16dp"
-        android:layout_width="match_parent" android:layout_height="wrap_content">
 
-        <androidx.cardview.widget.CardView
-            app:cardCornerRadius="26dp" app:cardElevation="0dp"
-            android:layout_width="match_parent" android:layout_height="wrap_content">
-            <LinearLayout android:orientation="vertical" android:padding="24dp" android:gravity="center_horizontal"
-                android:layout_width="match_parent" android:layout_height="wrap_content">
-                <ImageView android:src="@drawable/ic_cloudy_settings"
-                    android:layout_width="72dp" android:layout_height="72dp"/>
-                <TextView android:id="@+id/name" style="@style/Cloudy.SectionTitle"
-                    android:layout_marginTop="12dp"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-                <TextView android:id="@+id/handle" android:textSize="14sp"
-                    android:textColor="?android:attr/textColorSecondary"
-                    android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="24dp">
 
-        <TextView style="@style/Cloudy.CategoryHeader" android:text="Details"
-            android:layout_width="match_parent" android:layout_height="wrap_content"/>
-        <LinearLayout style="@style/Cloudy.Row">
-            <TextView style="@style/Cloudy.Row.Label" android:text="ROM"/>
-            <TextView android:id="@+id/rom" style="@style/Cloudy.Row.Value" tools:text="-"/>
+        <!-- Profile header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:paddingTop="24dp"
+            android:paddingBottom="20dp">
+
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="88dp"
+                android:layout_height="88dp"
+                android:src="@drawable/ic_cloudy_settings"
+                android:contentDescription="@string/tab_maintainer" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:textSize="21sp"
+                android:textStyle="bold"
+                android:textColor="?android:attr/textColorPrimary" />
+
+            <TextView
+                android:id="@+id/handle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textSize="14sp"
+                android:textColor="?android:attr/textColorSecondary" />
         </LinearLayout>
-        <View android:layout_width="match_parent" android:layout_height="1dp"
-            android:background="?android:attr/listDivider"/>
-        <LinearLayout style="@style/Cloudy.Row">
-            <TextView style="@style/Cloudy.Row.Label" android:text="Device"/>
-            <TextView android:id="@+id/device" style="@style/Cloudy.Row.Value" tools:text="-"/>
-        </LinearLayout>
-        <View android:layout_width="match_parent" android:layout_height="1dp"
-            android:background="?android:attr/listDivider"/>
-        <Button android:id="@+id/btnTelegram"
-            android:layout_marginTop="16dp" android:text="Telegram"
-            android:layout_width="match_parent" android:layout_height="wrap_content"/>
-        <Button android:id="@+id/btnDonate"
-            android:layout_marginTop="8dp" android:text="Donate"
-            android:layout_width="match_parent" android:layout_height="wrap_content"/>
+
+        <dev.oneuiproject.oneui.widget.Separator
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sep_details" />
+
+        <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:colorBackground"
+            android:orientation="vertical">
+
+            <dev.oneuiproject.oneui.widget.CardItemView android:id="@+id/rom"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:showTopDivider="false" app:title="@string/f_rom" />
+            <dev.oneuiproject.oneui.widget.CardItemView android:id="@+id/device"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                app:title="@string/f_device" />
+        </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
+
+        <dev.oneuiproject.oneui.widget.Separator
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sep_contact" />
+
+        <dev.oneuiproject.oneui.widget.RoundedLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:colorBackground"
+            android:orientation="vertical">
+
+            <dev.oneuiproject.oneui.widget.CardItemView android:id="@+id/btnTelegram"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:clickable="true" android:focusable="true"
+                app:showTopDivider="false" app:title="@string/btn_telegram" />
+            <dev.oneuiproject.oneui.widget.CardItemView android:id="@+id/btnDonate"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:clickable="true" android:focusable="true"
+                app:title="@string/btn_donate" />
+        </dev.oneuiproject.oneui.widget.RoundedLinearLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

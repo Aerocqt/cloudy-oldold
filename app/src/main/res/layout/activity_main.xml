@@ -1,23 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- OneUI collapsing header via dev.oneuiproject.oneui.layout.ToolbarLayout (verified class). -->
+<!--
+    Authentic OneUI 8 shell:
+      ToolbarLayout      - collapsing large title + subtitle (alpha fade handled by the lib)
+      FragmentContainer  - app:layout_location="main_content" (adaptive margins applied by lib)
+      BottomTabLayout    - app:layout_location="footer" (OneUI bottom navigation bar)
+-->
 <dev.oneuiproject.oneui.layout.ToolbarLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbarLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:expandable="true"
     app:expanded="true"
-    app:navigationIcon="@drawable/ic_settings_gear"
-    app:title="@string/app_name">
+    app:title="@string/app_name"
+    app:subtitle="@string/settings_entry_summary">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabs"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_location="main_content" />
+
+    <dev.oneuiproject.oneui.widget.BottomTabLayout
+        android:id="@+id/bottomTab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabMode="fixed" />
+        app:layout_location="footer"
+        app:menu="@menu/menu_bottom_tabs" />
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewPager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 </dev.oneuiproject.oneui.layout.ToolbarLayout>

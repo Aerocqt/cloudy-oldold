@@ -32,8 +32,8 @@ class MaintainerFragment : Fragment() {
                 val mt = m.maintainer
                 b.name.text = mt.name
                 b.handle.text = mt.handle
-                b.device.text = "${mt.device} (${mt.codename})"
-                b.rom.text = m.romName
+                b.device.summary = "${mt.device} (${mt.codename})"
+                b.rom.summary = m.romName
                 b.btnTelegram.setOnClickListener { open(mt.telegram) }
                 b.btnDonate.setOnClickListener { open(mt.donateUrl) }
             }

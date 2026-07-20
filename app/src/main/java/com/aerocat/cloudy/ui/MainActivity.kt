@@ -3,49 +3,47 @@ package com.aerocat.cloudy.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.fragment.app.commit
 import com.aerocat.cloudy.R
 import com.aerocat.cloudy.databinding.ActivityMainBinding
-import com.google.android.material.tabs.TabLayoutMediator
 
 /**
- * OneUI shell: a collapsing ToolbarLayout header + a SESL TabLayout wired to a ViewPager2.
- * Tab 0 = Check Update, Tab 1 = Maintainer. The settings gear routes to SettingsFragment.
+ * OneUI 8 shell:
+ *   - ToolbarLayout gives the collapsing large title + subtitle (handled by the library).
+ *   - BottomTabLayout is the OneUI bottom navigation bar, populated from menu_bottom_tabs.xml.
+ * Fragments are swapped directly (no ViewPager2) which is the OneUI-native pattern.
  */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    private val updateFragment by lazy { CheckUpdateFragment() }
+    private val maintainerFragment by lazy { MaintainerFragment() }
+    private val settingsFragment by lazy { SettingsFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Large bold title that alpha-fades between expanded and collapsed states (OneUI behaviour).
-        binding.toolbarLayout.setTitle(getString(R.string.app_name))
-
-
-        binding.viewPager.adapter = TabsAdapter(this)
-        TabLayoutMediator(binding.tabs, binding.viewPager) { tab, pos ->
-            tab.text = when (pos) {
-                0 -> getString(R.string.tab_check_update)
-                else -> getString(R.string.tab_maintainer)
+        binding.bottomTab.inflateMenu(R.menu.menu_bottom_tabs) { item ->
+            when (item.itemId) {
+                R.id.tab_update -> show(updateFragment, R.string.tab_check_update)
+                R.id.tab_maintainer -> show(maintainerFragment, R.string.tab_maintainer)
+                R.id.tab_settings -> show(settingsFragment, R.string.tab_settings)
             }
-        }.attach()
-
-        binding.toolbarLayout.setNavigationButtonOnClickListener {
-            supportFragmentManager.beginTransaction()
-                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
-                .add(android.R.id.content, SettingsFragment())
-                .addToBackStack("settings")
-                .commit()
+            true
         }
+
+        if (savedInstanceState == null) show(updateFragment, R.string.tab_check_update)
     }
 
-    private class TabsAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
-        override fun getItemCount() = 2
-        override fun createFragment(position: Int): Fragment =
-            if (position == 0) CheckUpdateFragment() else MaintainerFragment()
+    /** Swap the main_content fragment and update the collapsing header subtitle. */
+    private fun show(fragment: Fragment, subtitleRes: Int) {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+            replace(binding.fragmentContainer.id, fragment)
+        }
+        binding.toolbarLayout.setSubtitle(getString(subtitleRes))
     }
 }
