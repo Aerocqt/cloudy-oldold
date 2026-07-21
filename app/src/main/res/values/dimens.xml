@@ -5,5 +5,7 @@
          guarantees the OneUI 8.5 radius on every device. -->
     <dimen name="oui_card_radius">26dp</dimen>
     <dimen name="oui_card_margin_h">16dp</dimen>
-    <dimen name="oui_float_nav_radius">30dp</dimen>
+    <dimen name="oui_float_nav_radius">26dp</dimen>
+    <!-- Override the library's default bottom-tab padding to make the bar shorter. -->
+    <dimen name="oui_des_tab_layout_default_tab_padding">4dp</dimen>
 </resources>

@@ -26,9 +26,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginHorizontal="12dp"
-        android:layout_marginBottom="12dp"
-        app:maxChildWidth="520dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="10dp"
+        app:maxChildWidth="480dp"
         app:layout_location="footer">
 
         <dev.oneuiproject.oneui.widget.BottomTabLayout
@@ -36,7 +36,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_oui_float_nav"
-            android:elevation="6dp"
+            android:elevation="0dp"
+            android:outlineProvider="none"
+            android:minHeight="48dp"
             app:menu="@menu/menu_bottom_tabs" />
     </dev.oneuiproject.oneui.widget.BottomFloatingLayout>
 
